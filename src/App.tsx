@@ -3,7 +3,7 @@ import "./App.css";
 import MySelect from "./components/MySelect/MySelect";
 
 function App() {
-  const [groups, setGroups] = useState(["1", "2"]);
+  const [groups, setGroups] = useState([]);
 
   const styles = {
     width: "300px",

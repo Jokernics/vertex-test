@@ -19,13 +19,12 @@ export default function MySelectInput({
   setCurrentGroup,
   setIsListActive,
 }: props) {
-  const { isCanDeleted, isCanAdded } = useMemo(
+  const { isCanAdded, isCanDeleted } = useMemo(
     (isCanDeleted = false, isCanAdded = false) => {
       isCanAdded =
         !!currentGroup.trim().length && !groups.includes(currentGroup);
       isCanDeleted = !isCanAdded && groups.length > 1;
-
-      return { isCanDeleted, isCanAdded };
+      return { isCanAdded, isCanDeleted };
     },
     [currentGroup, groups]
   );
@@ -39,15 +38,25 @@ export default function MySelectInput({
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key !== "Enter") return;
-    addItem();
+    switch (e.key) {
+      case "Enter":
+        addItem();
+        break;
+      case "Delete":
+        deleteItem();
+        break;
+      default:
+        break;
+    }
   };
 
   const addItem = () => {
+    if (!isCanAdded) return;
     setGroups([...groups, currentGroup.trim()]);
   };
 
   const deleteItem = () => {
+    if (!isCanDeleted) return;
     const newGroups = groups.filter((item) => item !== currentGroup);
     setGroups(newGroups);
   };
@@ -72,10 +81,12 @@ export default function MySelectInput({
           {isCanAdded && (
             <CheckIcon onClick={addItem} className={s.checkIcon} />
           )}
-          <div className={s.arrowWrap}>
-            <ArrowIcon className={s.arrow1} />
-            <ArrowIcon className={s.arrow2} />
-          </div>
+          {!!groups.length && (
+            <div className={s.arrowWrap}>
+              <ArrowIcon className={s.arrow1} />
+              <ArrowIcon className={s.arrow2} />
+            </div>
+          )}
         </div>
       </div>
     </label>

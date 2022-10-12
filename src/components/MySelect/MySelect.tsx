@@ -38,7 +38,7 @@ export default function MySelect({ groups, setGroups }: props) {
           setCurrentGroup,
         }}
       />
-      {isListActive && (
+      {isListActive && !!groups.length &&  (
         <MySelectList {...{ groups, currentGroup, setCurrentGroup }} />
       )}
     </div>
