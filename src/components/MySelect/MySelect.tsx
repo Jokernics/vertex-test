@@ -15,7 +15,6 @@ export default function MySelect({ groups, setGroups }: props) {
 
   useEffect(() => {
     function handleClose(e: MouseEvent) {
-      e.stopPropagation();
       if (wraperRef.current.contains(e.target)) return;
       setIsListActive(false);
     }
